@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!-- Tienda generada con Harvys, asistente de e-commerce creado por el Profesor Harvey Sanabria -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dafhmarket — [POR COMPLETAR]</title>
+<meta name="description" content="Perfumería seleccionada y productos capilares.">
+<meta name="generator" content="Harvys — asistente de e-commerce del Profesor Harvey Sanabria">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="anim-media tarj-planas modo-claro">
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="modal-pago" onclick="modalClickFuera(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h3>Confirmar pago</h3><button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-total"><span class="tl">Total a pagar</span><span class="tm" id="modal-total-monto">$0</span></div>
+      <div class="pago-metodos" id="pago-metodos"></div>
+      <div class="pago-datos" id="pago-datos">
+        <div class="pd-label">Transferir a este número</div>
+        <div class="pd-numero" id="pd-numero"></div>
+        <div class="pd-nombre" id="pd-nombre"></div>
+        <button class="btn-copiar" onclick="copiarNumero()">📋 Copiar número</button>
+      </div>
+      <div class="pasos">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-txt" id="paso-1"></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-txt">Toca <strong>"Confirmar y enviar"</strong> — se abre WhatsApp con tu pedido</div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-txt" id="paso-3"></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a href="#" target="_blank" rel="noopener" class="btn-wsp" onclick="return prepararWsp(this)">✅ Confirmar y enviar por WhatsApp</a>
+      <button class="btn-seguir" onclick="cerrarModal()">← Seguir comprando</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+<!-- VISOR DE FOTOS -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto del producto">
+  <figure class="visor-caja">
+    <button class="visor-cerrar" aria-label="Cerrar">✕</button>
+    <div class="visor-foto" id="visor-foto"><img id="visor-img" alt=""></div>
+    <figcaption><strong id="visor-nombre"></strong><span id="visor-precio"></span></figcaption>
+    <div class="visor-ayuda">Toca o haz clic en la foto para ampliarla más</div>
+  </figure>
+</div>
+
+<button class="carrito-fab" onclick="toggleCarrito()" id="fab" aria-label="Abrir carrito">🛒<span class="carrito-badge" id="badge">0</span></button>
+
+<div class="carrito-panel" id="panel-carrito">
+  <div class="panel-header"><h3>Tu selección</h3><button class="btn-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">✕</button></div>
+  <ul id="lista-carrito"></ul>
+  <div class="panel-footer">
+    <div class="total-row"><span class="total-lbl">Total</span><span class="total-monto" id="total">$0</span></div>
+    <div class="panel-btns"><button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar</button><button class="btn-pagar" onclick="pagar()">Consultar pedido por WhatsApp</button></div>
+  </div>
+</div>
+
+<header class="hero hero-dividido">
+  <div class="hero-bg efecto-ninguno"></div>
+  <div class="hero-content">
+    <div>
+      
+      <div class="hero-badge">Perfumería · Cuidado capilar · Bienestar</div>
+      <h1>Dafhmarket<span>Tu ritual de cuidado</span></h1>
+      <p class="hero-sub">Descubre nuestra selección de perfumería, cuidado capilar y accesorios. Desde Cali, para toda Colombia.</p>
+      <a href="#catalogo" class="btn-hero">Explorar la selección
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats"><div class="hero-stat"><div class="num">6</div><div class="lbl">Productos para descubrir</div></div><div class="hero-stat"><div class="num">Cali</div><div class="lbl">Nuestro origen</div></div><div class="hero-stat"><div class="num">2–3 días</div><div class="lbl">Entrega estimada según zona</div></div></div>
+    </div>
+    <img src="img/valentino-tp32jp.jpg" alt="" class="hero-img"></div>
+  <div class="hero-scroll"><div></div></div>
+</header>
+
+<section class="banner-sec">
+  <div class="banner-glow"></div>
+  <div class="banner-content">
+    <div class="sec-label">Una selección para ti</div>
+    <h2>Pequeños detalles, <em>tu propio ritual</em></h2>
+    <p>Encuentra perfumes, productos capilares, accesorios y bienestar íntimo en un solo lugar. Consulta los detalles de tu pedido por WhatsApp.</p>
+    <div class="banner-chips"><span class="chip">Envíos nacionales</span><span class="chip">Desde Cali</span><span class="chip">Entrega estimada: 2–3 días</span><span class="chip">Pedidos por WhatsApp</span></div>
+  </div>
+</section>
+
+<div class="filtros-wrap" id="filtros-bar">
+  <div class="busqueda-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarBusqueda()">
+  </div>
+</div>
+<section class="catalogo-wrap" id="catalogo">
+  <div class="catalogo-header">
+    <div><div class="sec-label">Nuestra selección</div><div class="sec-title">Explora Dafhmarket</div></div>
+    <div class="catalogo-count" id="cont-count"></div>
+  </div>
+  <div id="productos"></div>
+</section>
+
+<section class="beneficios-sec" id="beneficios">
+  <div class="sec-centro"><div class="sec-label">Comprar en Dafhmarket</div><div class="sec-title">Más cerca de tu cuidado</div></div>
+  <div class="beneficios-grid">
+    <div class="bcard"><div class="bcard-icono">🚚</div><h3>Envíos a toda Colombia</h3><p>Recibe tu selección con entrega estimada de 2 a 3 días según la zona.</p></div><div class="bcard"><div class="bcard-icono">✨</div><h3>Variedad para tu cuidado</h3><p>Explora perfumería, cuidado capilar, accesorios para cabello y bienestar íntimo.</p></div><div class="bcard"><div class="bcard-icono">💬</div><h3>Contacto por WhatsApp</h3><p>Consulta los detalles de tu pedido directamente con Dafhmarket.</p></div>
+  </div>
+</section>
+
+<section class="recs-sec">
+  <div class="sec-label">Sigue explorando</div>
+  <div class="sec-title">Para tu próximo ritual</div>
+  <div class="recs-grid" id="recomendados"></div>
+</section>
+
+<section class="top-sec">
+  <div class="sec-label">Los favoritos de la comunidad</div>
+  <div class="sec-title">Tu selección más votada</div>
+  <div class="top-grid" id="top"></div>
+</section>
+
+<section class="duelo-sec">
+  <div class="sec-label">Tu gusto cuenta</div>
+  <div class="sec-title">¿Cuál va contigo?</div>
+  <div class="duelo-arena" id="duelo"></div>
+  <p class="duelo-info">Elige el producto que más te gusta y ayúdalo a subir en la selección más votada.</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-marca"><h3>Dafhmarket</h3><p>Perfumería seleccionada y cuidado capilar desde Cali. Envíos a toda Colombia.</p></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573205778794" target="_blank" rel="noopener">WhatsApp: +57 3205778794</a></li><li><a href="https://instagram.com/Dafhmarket" target="_blank" rel="noopener">Instagram: @Dafhmarket</a></li><li>📍 Cali</li></ul></div>
+    <div class="footer-col"><h4>Pagos</h4><ul></ul></div>
+    <div class="footer-col"><h4>Categorías</h4><ul><li>Perfumería</li><li>Cuidado capilar</li><li>Bienestar íntimo</li><li>Accesorios para cabello</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Dafhmarket — Todos los derechos reservados</span>
+    <span>Descubre tu próximo ritual con Dafhmarket.</span>
+  </div>
+  <div class="footer-credito">
+    Creada con <strong>Harvys</strong> · Prof. Harvey Sanabria ·
+    <a href="https://wa.me/573103323843?text=Hola%20Profesor%20Harvey%2C%20vi%20una%20tienda%20creada%20con%20Harvys%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp 310 332 3843</a>
+  </div>
+</footer>
+
+<!-- Copia del proyecto para volver a abrirlo en Harvys (botón "Abrir"). No la borres. -->
+<script type="application/json" id="harvys-proyecto">{"negocio":{"nombre":"Dafhmarket","descripcion":"Perfumería seleccionada y productos capilares.","eslogan":"[POR COMPLETAR]","ciudad":"Cali","cobertura":"Envíos a todo Colombia. Entrega estimada de 2 a 3 días según la zona.","whatsapp":"573205778794","instagram":"Dafhmarket","facebook":"","tiktok":"","horarios":[],"logo":""},"tema":{"nombreEstilo":"Elegancia natural","modo":"claro","colores":{"primario":"#D8C3A5","textoSobrePrimario":"#302820","fondo":"#F7F4EF","fondoAlterno":"#EEE6DB","tarjeta":"#FFFFFF","texto":"#302820","textoSuave":"#665B50","acento":"#805B46"},"fuentes":{"titulos":"Cormorant Garamond","cuerpo":"Lato"},"titulosMayusculas":false,"radio":18,"animaciones":"media","fondoEfecto":"ninguno","hero":"dividido","tarjetas":"planas"},"textos":{"heroEtiqueta":"Perfumería · Cuidado capilar · Bienestar","heroTitulo":"Dafhmarket","heroTituloResaltado":"Tu ritual de cuidado","heroSubtitulo":"Descubre nuestra selección de perfumería, cuidado capilar y accesorios. Desde Cali, para toda Colombia.","heroBoton":"Explorar la selección","heroImagen":"foto:tp32jp","estadisticas":[{"valor":"{productos}","etiqueta":"Productos para descubrir"},{"valor":"Cali","etiqueta":"Nuestro origen"},{"valor":"2–3 días","etiqueta":"Entrega estimada según zona"}],"bannerEtiqueta":"Una selección para ti","bannerTitulo":"Pequeños detalles,","bannerTituloResaltado":"tu propio ritual","bannerTexto":"Encuentra perfumes, productos capilares, accesorios y bienestar íntimo en un solo lugar. Consulta los detalles de tu pedido por WhatsApp.","chips":["Envíos nacionales","Desde Cali","Entrega estimada: 2–3 días","Pedidos por WhatsApp"],"catalogoEtiqueta":"Nuestra selección","catalogoTitulo":"Explora Dafhmarket","botonAgregar":"+ Añadir al carrito","beneficiosEtiqueta":"Comprar en Dafhmarket","beneficiosTitulo":"Más cerca de tu cuidado","recomendadosEtiqueta":"Sigue explorando","recomendadosTitulo":"Para tu próximo ritual","topEtiqueta":"Los favoritos de la comunidad","topTitulo":"Tu selección más votada","dueloEtiqueta":"Tu gusto cuenta","dueloTitulo":"¿Cuál va contigo?","dueloInfo":"Elige el producto que más te gusta y ayúdalo a subir en la selección más votada.","testimoniosEtiqueta":"Experiencias de compra","testimoniosTitulo":"Voces de nuestra comunidad","horariosEtiqueta":"Hablemos","horariosTitulo":"Nuestros horarios de atención","footerTexto":"Perfumería seleccionada y cuidado capilar desde Cali. Envíos a toda Colombia.","footerFrase":"Descubre tu próximo ritual con Dafhmarket.","carritoTitulo":"Tu selección","botonPagar":"Consultar pedido por WhatsApp"},"productos":[{"id":"p1","nombre":"Valentino","precio":49900,"categoria":"Perfumería","imagen":"foto:tp32jp","opciones":null,"destacado":false},{"id":"p2","nombre":"Shampoo Texturizante L'mar con Semillas de Lino","precio":25000,"categoria":"Cuidado capilar","imagen":"foto:4vlcp0","opciones":null,"destacado":false},{"id":"p3","nombre":"Mascarilla Capilar Ancestral La Poción","precio":40000,"categoria":"Cuidado capilar","imagen":"foto:9hari2","opciones":null,"destacado":false},{"id":"p4","nombre":"Lubricante Sen Íntimo Caliente Crema Whisky","precio":23000,"categoria":"Bienestar íntimo","imagen":"foto:hdkr20","opciones":null,"destacado":false},{"id":"p5","nombre":"Gorro de Satín Antifrizz DREAM39 — Tonos Surtidos","precio":10000,"categoria":"Accesorios para cabello","imagen":"foto:5fec23","opciones":null,"destacado":false},{"id":"p6","nombre":"Estimulante Capilar","precio":12000,"categoria":"Accesorios para cabello","imagen":"foto:n5b9p0","opciones":null,"destacado":false}],"beneficios":[{"icono":"🚚","titulo":"Envíos a toda Colombia","texto":"Recibe tu selección con entrega estimada de 2 a 3 días según la zona."},{"icono":"✨","titulo":"Variedad para tu cuidado","texto":"Explora perfumería, cuidado capilar, accesorios para cabello y bienestar íntimo."},{"icono":"💬","titulo":"Contacto por WhatsApp","texto":"Consulta los detalles de tu pedido directamente con Dafhmarket."}],"testimonios":[],"pagos":{"metodos":[],"numeroTransferencia":"[POR COMPLETAR]","titular":"[POR COMPLETAR]","contraentregaDetalle":"No ofrecemos pago contraentrega."},"backend":{"url":"https://script.google.com/macros/s/AKfycby3k_qMISeam6wHXpGXzyJ7h0QUWrO4PdA-Rpwtwd9JJQCncOOZOTDRwnuzEhh3RGZ6/exec"},"secciones":["banner","catalogo","beneficios","recomendados","top","duelo"],"personalizado":{"css":"","secciones":[]}}</script>
+<script src="script.js"></script>
+</body>
+</html>
